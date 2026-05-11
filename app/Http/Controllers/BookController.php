@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Bookshelf;
+use Illuminate\Container\Attributes\Storage as AttributesStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -131,6 +132,13 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $book = Book::findOrFail($id);
+        Storage::delete('storage/cover_buku/'. $book->cover);
+        $book->delete();
+        $notification = array(
+            'message' => 'Data buku Berhasil dihapus!',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('book.index')->with($notification);
     }
 }

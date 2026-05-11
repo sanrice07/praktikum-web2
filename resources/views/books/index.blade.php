@@ -39,7 +39,13 @@
                                 <td>{{ $book->bookshelf->name}}</td>
                                 <td>
                                     <x-primary-button tag="a" href="{{ route('book.edit', $book->id) }}">Edit</x-primary-button>
-                                    <x-danger-button>Delete</x-danger-button>
+                                    {{-- <x-danger-button href="{{ route('book.delete', $book->id) }}">Delete</x-danger-button> --}}
+                                    <form action="{{ route('book.delete', $book->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <x-danger-button>Delete</x-danger-button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
